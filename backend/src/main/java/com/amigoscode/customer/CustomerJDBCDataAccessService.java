@@ -133,4 +133,15 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 .stream()
                 .findFirst();
     }
+
+    public void updateCustomerProfileImageId(String profileImageId,
+                                      Integer customerId) {
+        var sql = """
+                UPDATE customer
+                SET profile_image_id = ?
+                WHERE id = ?
+                """;
+        jdbcTemplate.update(sql, profileImageId, customerId);
+//        jdbcTemplate.update
+    }
 }
