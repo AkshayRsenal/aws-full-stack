@@ -126,39 +126,39 @@ public class CustomerService {
 
         customerDao.updateCustomer(customer);
     }
-//
-//    public void uploadCustomerProfileImage(Integer customerId, MultipartFile file) {
-//
-//        checkIfCustomerExistsorThrow(customerId);
-//        String profileImageId = UUID.randomUUID().toString();
-//        try {
-//            s3Service.putObject(
-//                    s3Buckets.getCustomer(),
-//                    "profile-images/%s/%s".formatted(customerId, profileImageId),
-//                    file.getBytes()
-//            );
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-////        TODO: Store profileImageId to Postgres
-//
-//    }
-//
-//    public byte[] getCustomerProfileImage(Integer customerId) {
-//        var customer = customerDao.selectCustomerById(customerId)
-//                .map(customerDTOMapper)
-//                .orElseThrow(() -> new ResourceNotFoundException(
-//                        "customer with id [%s] not found".formatted(customerId)
-//                ));
-////TODO: Check if profileImageId is empty or null
-//        var profileImageId = "TODO";
-//
-//        byte[] profileImage = s3Service.getObject(
-//                s3Buckets.getCustomer(),
-//                "profile-images/%s/%s".formatted(customerId, profileImageId)
-//        );
-//        return profileImage;
-//    }
+
+    public void uploadCustomerProfileImage(Integer customerId, MultipartFile file) {
+
+        checkIfCustomerExistsorThrow(customerId);
+        String profileImageId = UUID.randomUUID().toString();
+        try {
+            s3Service.putObject(
+                    s3Buckets.getCustomer(),
+                    "profile-images/%s/%s".formatted(customerId, profileImageId),
+                    file.getBytes()
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+//        TODO: Store profileImageId to Postgres
+
+    }
+
+    public byte[] getCustomerProfileImage(Integer customerId) {
+        var customer = customerDao.selectCustomerById(customerId)
+                .map(customerDTOMapper)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "customer with id [%s] not found".formatted(customerId)
+                ));
+//TODO: Check if profileImageId is empty or null
+        var profileImageId = "TODO";
+
+        byte[] profileImage = s3Service.getObject(
+                s3Buckets.getCustomer(),
+                "profile-images/%s/%s".formatted(customerId, profileImageId)
+        );
+        return profileImage;
+    }
 }
 
